@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9514700}
   - component: {fileID: 5494176}
   - component: {fileID: 6584542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: plank
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 6588728}
   - component: {fileID: 2346702}
   - component: {fileID: 5492502}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Platform
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -2039,7 +2039,7 @@ GameObject:
   - component: {fileID: 6598084}
   - component: {fileID: 2326236}
   - component: {fileID: 5448196}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Platform
   m_TagString: Platform
   m_Icon: {fileID: 0}

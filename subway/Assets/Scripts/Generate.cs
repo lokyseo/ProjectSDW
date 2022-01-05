@@ -33,9 +33,9 @@ public class Generate : MonoBehaviour {
 			rand = Random.Range (0, premades.Length);
 			Debug.Log(premades.Length);
 			Debug.Log(currentPremades.Capacity-1);
-			currentPremades.Add((Transform)Instantiate
-                (premades [rand], new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity-1].position.z+140), Quaternion.identity) as Transform);
-			Instantiate(background, new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity-1].position.z+140), Quaternion.identity);
+			//currentPremades.Add((Transform)Instantiate
+            //    (premades [rand], new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity - 1].position.z+140), Quaternion.identity) as Transform);
+			//Instantiate(background, new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity - 1].position.z+140), Quaternion.identity);
 		}
 	}
 }

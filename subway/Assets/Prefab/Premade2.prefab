@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 3316036}
   - component: {fileID: 13602578}
   - component: {fileID: 2323304}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (9)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 3359880}
   - component: {fileID: 13682838}
   - component: {fileID: 2367466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (4)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 3347336}
   - component: {fileID: 13674616}
   - component: {fileID: 2377568}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (5)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 3329846}
   - component: {fileID: 13614874}
   - component: {fileID: 2392104}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (6)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -954,7 +954,7 @@ GameObject:
   - component: {fileID: 3378462}
   - component: {fileID: 13615542}
   - component: {fileID: 2322558}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (3)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 3315390}
   - component: {fileID: 13678460}
   - component: {fileID: 2319398}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (1)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -1142,7 +1142,7 @@ GameObject:
   - component: {fileID: 3384726}
   - component: {fileID: 13631842}
   - component: {fileID: 2369370}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (2)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -1626,7 +1626,7 @@ GameObject:
   - component: {fileID: 3384738}
   - component: {fileID: 13640352}
   - component: {fileID: 2379518}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (8)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -1720,7 +1720,7 @@ GameObject:
   - component: {fileID: 3372194}
   - component: {fileID: 13670068}
   - component: {fileID: 2331402}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder (7)
   m_TagString: Coin
   m_Icon: {fileID: 0}
@@ -1814,7 +1814,7 @@ GameObject:
   - component: {fileID: 3307514}
   - component: {fileID: 13639408}
   - component: {fileID: 2360630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Coin
   m_Icon: {fileID: 0}

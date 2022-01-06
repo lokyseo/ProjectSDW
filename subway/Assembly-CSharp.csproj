@@ -66,10 +66,6 @@
     <Compile Include="Assets\Scripts\MoveObjects.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\destroybg.cs" />
-    <Compile Include="Assets\ex\ButtonManager.cs" />
-    <Compile Include="Assets\ex\FollowPlayer.cs" />
-    <Compile Include="Assets\ex\GameOverScore.cs" />
-    <Compile Include="Assets\ex\PlayerMovement.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/unityHub/2019.4.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

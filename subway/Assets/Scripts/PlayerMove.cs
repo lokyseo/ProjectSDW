@@ -21,58 +21,131 @@ public class PlayerMove : MonoBehaviour
     }
 
     public static bool dead;
-    public static int score;
+    //public static int score;
     private Rigidbody myRigid;
-    private Collider mycoll;
     public Animator anim;
     private bool isJumping;
     private float moveSpeed = 5.0f;
-    public Transform leftpt;
-    public Transform rightpt;
+    private int ptXchar;
+    private Vector3 target;
+    private bool isLeft;
+    private bool isRight;
 
     private void Start()
     {
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
-        mycoll = this.GetComponent<BoxCollider>();
         isJumping = false;
-
+        isLeft = false;
+        isRight = false;
+        ptXchar = 0;
     }
 
     private void Update()
     {
-        myRigid.AddForce(Vector3.down * 0.1f, ForceMode.Impulse);
-
+        myRigid.AddForce(Vector3.down * 0.5f, ForceMode.Impulse);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            myRigid.transform.position += Vector3.MoveTowards(gameObject.transform.position, leftpt.position, 0.5f);
-            //myRigid.velocity = Vector3.zero;
-            //myRigid.AddForce(Vector3.left * 10.0f, ForceMode.Impulse);
+            if (isLeft == false)
+            {
+                if (ptXchar == 0 || ptXchar == 1)
+                {
+                    target = this.transform.position + new Vector3(-3.5f, 0, 0);
+                    isLeft = true;
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            myRigid.transform.Translate(3.5f, 0, 0);
+            if (isRight == false)
+            {
 
-            //myRigid.velocity = Vector3.zero;
-            //myRigid.AddForce(Vector3.left * -10.0f, ForceMode.Impulse);
-        }
+                if (ptXchar == 0 || ptXchar == -1)
+                {
+                    target = this.transform.position + new Vector3(3.5f, 0, 0);
+                    isRight = true;
+                }
+            }
+        }      
+        
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (isJumping == false)
             {
                 isJumping = true;
-                myRigid.velocity = Vector3.zero;
-                myRigid.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
+                myRigid.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
                 anim.CrossFade("Jumping", 0.1f);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            myRigid.velocity = Vector3.zero;
-            myRigid.AddForce(Vector3.down * 12.0f, ForceMode.Impulse);
+            myRigid.AddForce(Vector3.down * 10.0f, ForceMode.Impulse);
             anim.CrossFade("Rolling", 0.1f);
-            
-           
+        }
+
+        if (isLeft)
+        {
+            if (ptXchar == 0)
+            {
+                this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                {
+                    ptXchar--;
+                    isLeft = false;
+                    Debug.Log("asdasdad");
+
+                }
+            }
+            else if (ptXchar == 1)
+            {
+                this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(target, transform.position) <= 0.5f)
+                {
+                    ptXchar--;
+                    isLeft = false;
+                    Debug.Log("asdasdad");
+
+                }
+            }
+            else
+            {
+                isLeft = false;
+
+            }
+
+        }
+        else if (isRight)
+        {
+            if (ptXchar == 0)
+            {
+                this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                {
+                    ptXchar++;
+                    isRight = false;
+                    Debug.Log("asdasdad");
+                }
+
+            }
+            else if (ptXchar == -1)
+            {
+                this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                {
+                    ptXchar++;
+                    isRight = false;
+                    Debug.Log("asdasdad");
+
+                }
+
+            }
+            else
+            {
+                isRight = false;
+
+            }
+
+
         }
     }
 
@@ -81,6 +154,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.layer == 10)
         {
             isJumping = false;
+            
         }
     }
 }

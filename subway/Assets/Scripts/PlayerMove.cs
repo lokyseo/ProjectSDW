@@ -24,62 +24,71 @@ public class PlayerMove : MonoBehaviour
     //public static int score;
     private Rigidbody myRigid;
     public Animator anim;
-    private bool isJumping;
+    private BoxCollider mycoll;    
     private float moveSpeed = 5.0f;
     private int ptXchar;
     private Vector3 target;
     private bool isLeft;
     private bool isRight;
+    private bool isJumping;
+    private bool isRolling;
 
     private void Start()
     {
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
+        mycoll = this.GetComponent<BoxCollider>();
         isJumping = false;
         isLeft = false;
         isRight = false;
+        isRolling = false;
         ptXchar = 0;
     }
 
     private void Update()
     {
-        myRigid.AddForce(Vector3.down * 0.5f, ForceMode.Impulse);
+        myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (isLeft == false)
+            if (isLeft == false || isRolling == false)
             {
                 if (ptXchar == 0 || ptXchar == 1)
                 {
                     target = this.transform.position + new Vector3(-3.5f, 0, 0);
+                    anim.CrossFade("shortJump", 0.1f);
                     isLeft = true;
                 }
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (isRight == false)
+            if (isRight == false || isRolling == false)
             {
 
                 if (ptXchar == 0 || ptXchar == -1)
                 {
                     target = this.transform.position + new Vector3(3.5f, 0, 0);
+                    anim.CrossFade("shortJump", 0.1f);
                     isRight = true;
                 }
             }
-        }      
-        
+        }
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (isJumping == false)
             {
                 isJumping = true;
-                myRigid.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                myRigid.AddForce(Vector3.up * 16.0f, ForceMode.Impulse);
                 anim.CrossFade("Jumping", 0.1f);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            myRigid.AddForce(Vector3.down * 10.0f, ForceMode.Impulse);
+            isRolling = true;
+            mycoll.size = new Vector3(0.5f, 1.0f, 1.0f);
+            mycoll.center = new Vector3(0, 0.5f, 0);
+            myRigid.AddForce(Vector3.down * 15.0f, ForceMode.Impulse);
             anim.CrossFade("Rolling", 0.1f);
         }
 
@@ -87,8 +96,9 @@ public class PlayerMove : MonoBehaviour
         {
             if (ptXchar == 0)
             {
-                this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                this.transform.position =
+                    Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
                 {
                     ptXchar--;
                     isLeft = false;
@@ -99,18 +109,16 @@ public class PlayerMove : MonoBehaviour
             else if (ptXchar == 1)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(target, transform.position) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
                 {
                     ptXchar--;
                     isLeft = false;
                     Debug.Log("asdasdad");
-
                 }
             }
             else
             {
                 isLeft = false;
-
             }
 
         }
@@ -119,7 +127,7 @@ public class PlayerMove : MonoBehaviour
             if (ptXchar == 0)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
                 {
                     ptXchar++;
                     isRight = false;
@@ -130,22 +138,25 @@ public class PlayerMove : MonoBehaviour
             else if (ptXchar == -1)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(target, this.transform.position) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
                 {
                     ptXchar++;
                     isRight = false;
                     Debug.Log("asdasdad");
-
                 }
-
             }
             else
             {
                 isRight = false;
-
             }
+        }
 
-
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Rolling") &&
+            anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            isRolling = false;
+            mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+            mycoll.center = new Vector3(0, 1.1f, 0);
         }
     }
 
@@ -154,7 +165,9 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.layer == 10)
         {
             isJumping = false;
-            
         }
+
     }
+
+
 }

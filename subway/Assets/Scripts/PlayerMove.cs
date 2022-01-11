@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public static bool dead;
-    //public static int score;
+    public static int score;
     private Rigidbody myRigid;
     public Animator anim;
     private BoxCollider mycoll;    
@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        dead = false;
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
         mycoll = this.GetComponent<BoxCollider>();
@@ -167,6 +168,19 @@ public class PlayerMove : MonoBehaviour
             isJumping = false;
         }
 
+        if(collision.gameObject.layer == 12)
+        {
+            anim.CrossFade("BackDeath", 0.1f);
+            dead = true;
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 11)
+        {
+            score += 10;
+            Destroy(other.gameObject);
+        }
     }
 
 

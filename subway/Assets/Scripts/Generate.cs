@@ -8,7 +8,6 @@ public class Generate : MonoBehaviour {
 	public Transform[] premades;
 	public Transform background;
 	public List<Transform> currentPremades;
-	Transform clone;
 	int rand;
 
 

@@ -36,6 +36,7 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         dead = false;
+        score = 0;
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
         mycoll = this.GetComponent<BoxCollider>();
@@ -48,10 +49,11 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
+        if (PlayerMove.dead) return;
+            myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (isLeft == false || isRolling == false)
+            if (isLeft == false && isRolling == false)
             {
                 if (ptXchar == 0 || ptXchar == 1)
                 {
@@ -63,7 +65,7 @@ public class PlayerMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (isRight == false || isRolling == false)
+            if (isRight == false && isRolling == false)
             {
 
                 if (ptXchar == 0 || ptXchar == -1)
@@ -80,6 +82,9 @@ public class PlayerMove : MonoBehaviour
             if (isJumping == false)
             {
                 isJumping = true;
+                isRolling = false;
+                mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+                mycoll.center = new Vector3(0, 1.1f, 0);
                 myRigid.AddForce(Vector3.up * 16.0f, ForceMode.Impulse);
                 anim.CrossFade("Jumping", 0.1f);
             }
@@ -103,7 +108,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     ptXchar--;
                     isLeft = false;
-                    Debug.Log("asdasdad");
 
                 }
             }
@@ -114,7 +118,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     ptXchar--;
                     isLeft = false;
-                    Debug.Log("asdasdad");
+                    
                 }
             }
             else
@@ -132,7 +136,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     ptXchar++;
                     isRight = false;
-                    Debug.Log("asdasdad");
                 }
 
             }
@@ -143,7 +146,6 @@ public class PlayerMove : MonoBehaviour
                 {
                     ptXchar++;
                     isRight = false;
-                    Debug.Log("asdasdad");
                 }
             }
             else
@@ -153,12 +155,14 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Rolling") &&
-            anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+            anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
         {
             isRolling = false;
             mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
             mycoll.center = new Vector3(0, 1.1f, 0);
         }
+
+       
     }
 
     void OnCollisionEnter(Collision collision)
@@ -173,6 +177,14 @@ public class PlayerMove : MonoBehaviour
             anim.CrossFade("BackDeath", 0.1f);
             dead = true;
         }
+        else if (collision.gameObject.layer == 13)
+        {
+            anim.CrossFade("Fall Flat", 0.1f);
+            
+            dead = true;
+
+        }
+
     }
     void OnTriggerEnter(Collider other)
     {

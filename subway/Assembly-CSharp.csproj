@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\TabToStart.cs" />
+    <Compile Include="Assets\Scripts\UIScript.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/unityHub/2019.4.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

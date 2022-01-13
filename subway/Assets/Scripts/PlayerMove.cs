@@ -55,9 +55,15 @@ public class PlayerMove : MonoBehaviour
         {
             if (isLeft == false && isRolling == false)
             {
-                if (ptXchar == 0 || ptXchar == 1)
+                if (ptXchar == 0)
                 {
-                    target = this.transform.position + new Vector3(-3.5f, 0, 0);
+                    target = new Vector3(-3.5f, this.transform.position.y, this.transform.position.z);
+                    anim.CrossFade("shortJump", 0.1f);
+                    isLeft = true;
+                }
+                else if(ptXchar == 1)
+                {
+                    target = new Vector3(0, this.transform.position.y, this.transform.position.z);
                     anim.CrossFade("shortJump", 0.1f);
                     isLeft = true;
                 }
@@ -65,12 +71,18 @@ public class PlayerMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (isRight == false && isRolling == false)
+            if (isRight == false && isRolling == false && isLeft == false)
             {
 
-                if (ptXchar == 0 || ptXchar == -1)
+                if (ptXchar == 0)
                 {
-                    target = this.transform.position + new Vector3(3.5f, 0, 0);
+                    target = new Vector3(3.5f, this.transform.position.y, this.transform.position.z);
+                    anim.CrossFade("shortJump", 0.1f);
+                    isRight = true;
+                }
+                else if(ptXchar == -1)
+                {
+                    target = new Vector3(0, this.transform.position.y, this.transform.position.z);
                     anim.CrossFade("shortJump", 0.1f);
                     isRight = true;
                 }
@@ -85,7 +97,7 @@ public class PlayerMove : MonoBehaviour
                 isRolling = false;
                 mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
                 mycoll.center = new Vector3(0, 1.1f, 0);
-                myRigid.AddForce(Vector3.up * 16.0f, ForceMode.Impulse);
+                myRigid.AddForce(Vector3.up * 18.0f, ForceMode.Impulse);
                 anim.CrossFade("Jumping", 0.1f);
             }
         }
@@ -172,6 +184,44 @@ public class PlayerMove : MonoBehaviour
             isJumping = false;
         }
 
+        if(collision.gameObject.layer == 14)
+        {
+            if(isLeft)
+            {
+                anim.CrossFade("leftHit", 0.0f);
+                isLeft = false;
+                if(ptXchar == 0)
+                {
+                    
+                    this.transform.position = 
+                       Vector3.Lerp(transform.position, new Vector3(3.5f, 0, 0), moveSpeed * Time.deltaTime);
+                }
+                else if(ptXchar == -1)
+                {
+                    this.transform.position =
+                       Vector3.Lerp(transform.position, new Vector3(0, 0, 0), moveSpeed * Time.deltaTime);
+                }
+            }
+            if (isRight)
+            {
+                anim.CrossFade("rightHit", 0.0f);
+                
+
+                isRight = false;
+                if (ptXchar == 1)
+                {
+                    this.transform.position =
+                       Vector3.Lerp(transform.position, new Vector3(0, 0, 0), moveSpeed * Time.deltaTime);
+                }
+                else if (ptXchar == 0)
+                {
+                    this.transform.position =
+                       Vector3.Lerp(transform.position, new Vector3(-3.5f, 0, 0), moveSpeed * Time.deltaTime);
+                }
+            }
+
+        }
+
         if(collision.gameObject.layer == 12)
         {
             anim.CrossFade("BackDeath", 0.1f);
@@ -191,6 +241,7 @@ public class PlayerMove : MonoBehaviour
         if (other.gameObject.layer == 11)
         {
             score += 10;
+            UIScript._money += 10;
             Destroy(other.gameObject);
         }
     }

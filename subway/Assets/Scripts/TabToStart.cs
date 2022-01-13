@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class TabToStart : MonoBehaviour
 {
+    
+
     public GameObject _text;
     public Animator playeranim;
     public GameObject _player;
@@ -45,7 +47,7 @@ public class TabToStart : MonoBehaviour
                 Vector3.MoveTowards(_chaser.transform.position, new Vector3(0, 0, 50), moveSpeed * Time.deltaTime);
         }
 
-        if (_chaser.transform.position.z >= 39.0f)
+        if (_chaser.transform.position.z >= 37.0f)
         {
             Debug.Log("anfaiogap");
             Color color = _imageColor.color;

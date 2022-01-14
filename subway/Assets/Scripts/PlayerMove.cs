@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public static bool dead;
-    public static int score;
+    
     private Rigidbody myRigid;
     public Animator anim;
     private BoxCollider mycoll;    
@@ -32,11 +32,11 @@ public class PlayerMove : MonoBehaviour
     private bool isRight;
     private bool isJumping;
     private bool isRolling;
+    private bool isBoarding;
 
     private void Start()
     {
         dead = false;
-        score = 0;
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
         mycoll = this.GetComponent<BoxCollider>();
@@ -44,6 +44,7 @@ public class PlayerMove : MonoBehaviour
         isLeft = false;
         isRight = false;
         isRolling = false;
+        isBoarding = false;
         ptXchar = 0;
     }
 
@@ -58,13 +59,30 @@ public class PlayerMove : MonoBehaviour
                 if (ptXchar == 0)
                 {
                     target = new Vector3(-3.5f, this.transform.position.y, this.transform.position.z);
-                    anim.CrossFade("shortJump", 0.1f);
+                    if(isBoarding == true)
+                    {
+                        anim.CrossFade("Boardshorting", 0.1f);
+
+                    }
+                    else
+                    {
+                        anim.CrossFade("shortJump", 0.1f);
+                    }
                     isLeft = true;
                 }
                 else if(ptXchar == 1)
                 {
                     target = new Vector3(0, this.transform.position.y, this.transform.position.z);
-                    anim.CrossFade("shortJump", 0.1f);
+                    if (isBoarding == true)
+                    {
+                        anim.CrossFade("Boardshorting", 0.1f);
+
+
+                    }
+                    else
+                    {
+                        anim.CrossFade("shortJump", 0.1f);
+                    }
                     isLeft = true;
                 }
             }
@@ -77,13 +95,30 @@ public class PlayerMove : MonoBehaviour
                 if (ptXchar == 0)
                 {
                     target = new Vector3(3.5f, this.transform.position.y, this.transform.position.z);
-                    anim.CrossFade("shortJump", 0.1f);
+                    if (isBoarding == true)
+                    {
+                        anim.CrossFade("Boardshorting", 0.1f);
+
+
+                    }
+                    else
+                    {
+                        anim.CrossFade("shortJump", 0.1f);
+                    }
                     isRight = true;
                 }
                 else if(ptXchar == -1)
                 {
                     target = new Vector3(0, this.transform.position.y, this.transform.position.z);
-                    anim.CrossFade("shortJump", 0.1f);
+                    if (isBoarding == true)
+                    {
+                        anim.CrossFade("Boardshorting", 0.1f);
+
+                    }
+                    else
+                    {
+                        anim.CrossFade("shortJump", 0.1f);
+                    }
                     isRight = true;
                 }
             }
@@ -98,7 +133,14 @@ public class PlayerMove : MonoBehaviour
                 mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
                 mycoll.center = new Vector3(0, 1.1f, 0);
                 myRigid.AddForce(Vector3.up * 18.0f, ForceMode.Impulse);
-                anim.CrossFade("Jumping", 0.1f);
+                if (isBoarding == true)
+                {
+                    anim.CrossFade("BoardJumping", 0.1f);
+                }
+                else
+                {
+                    anim.CrossFade("Jumping", 0.1f);
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -107,7 +149,21 @@ public class PlayerMove : MonoBehaviour
             mycoll.size = new Vector3(0.5f, 1.0f, 1.0f);
             mycoll.center = new Vector3(0, 0.5f, 0);
             myRigid.AddForce(Vector3.down * 15.0f, ForceMode.Impulse);
-            anim.CrossFade("Rolling", 0.1f);
+            if(isBoarding == true)
+            {
+                anim.CrossFade("BoardRoll", 0.1f);
+                
+            }
+            else
+            {
+                anim.CrossFade("Rolling", 0.1f);
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.CrossFade("Boarding", 0);
+            isBoarding = true;
         }
 
         if (isLeft)
@@ -240,8 +296,13 @@ public class PlayerMove : MonoBehaviour
     {
         if (other.gameObject.layer == 11)
         {
-            score += 10;
+            UIScript._curscore += 10;
             UIScript._money += 10;
+            PlayerPrefs.SetInt(UIScript._txtMoney, UIScript._money);
+            if(UIScript._curscore > UIScript._bestscore)
+            {
+                PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
+            }
             Destroy(other.gameObject);
         }
     }

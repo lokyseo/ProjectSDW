@@ -14,13 +14,13 @@ public class ScoreManager : MonoBehaviour
 	{
 		_money.text = " : " + UIScript._money;
 
-		_score.text = "Score : " + PlayerMove.score;
+		_score.text = "Score : " + UIScript._curscore;
 		scoreTimer = 0;
 	}
 
 	void Update()
 	{
-		_score.text = "Score : " + PlayerMove.score;
+		_score.text = "Score : " + UIScript._curscore;
 		_money.text = " : " + UIScript._money;
 
 		if (!PlayerMove.dead)
@@ -29,7 +29,11 @@ public class ScoreManager : MonoBehaviour
 			if (scoreTimer > 2)
 			{
 				scoreTimer = 0;
-				PlayerMove.score += 50;
+				UIScript._curscore += 50;
+				if (UIScript._curscore > UIScript._bestscore)
+				{
+					PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
+				}
 			}
 		}
 

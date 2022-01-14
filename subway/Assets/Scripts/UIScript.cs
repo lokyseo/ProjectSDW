@@ -11,6 +11,13 @@ public class UIScript : MonoBehaviour
 	}
 	private static UIScript instance = null;
 
+	public static int _money;
+	public static string _txtMoney = "Money";
+
+	public static int _bestscore;
+	public static int _curscore;
+	public static string _txtBestscore = "Best";
+
 	private void Awake()
 	{
 		if (instance)
@@ -21,18 +28,19 @@ public class UIScript : MonoBehaviour
 		instance = this;
 	}
 
-	public static int _money;
-
 	public Text _textMoney;
+	public Text _textBest;
+
 	void Start()
     {
-		_money = 100;
-		_textMoney.text = "" + _money;
+		_money = PlayerPrefs.GetInt(_txtMoney, 0);
+		_textMoney.text = $" : {_money.ToString()}";
+
+		_bestscore = PlayerPrefs.GetInt(_txtBestscore, 0);
+		_textBest.text = $"Best Score : {_bestscore.ToString()}";
+
+		_curscore = 0;
 	}
 
-    void Update()
-    {
-		_textMoney.text = "" + _money;
-
-	}
+    
 }

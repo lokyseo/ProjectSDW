@@ -33,6 +33,8 @@ public class PlayerMove : MonoBehaviour
     private bool isJumping;
     private bool isRolling;
     private bool isBoarding;
+    private float rotSpeed;
+    public GameObject _board;
 
     private void Start()
     {
@@ -46,12 +48,31 @@ public class PlayerMove : MonoBehaviour
         isRolling = false;
         isBoarding = false;
         ptXchar = 0;
+        rotSpeed = 20.0f;
+        _board.SetActive(false);
     }
 
     private void Update()
     {
         if (PlayerMove.dead) return;
-            myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
+
+        myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
+
+        if (isBoarding)
+        {
+            _board.SetActive(true);
+            _board.transform.Rotate(new Vector3(0, rotSpeed * Time.deltaTime, 0));
+            if (_board.transform.rotation.eulerAngles.y > 100.0f)
+            {
+                rotSpeed = -20.0f;
+            }
+            if (_board.transform.rotation.eulerAngles.y < 80.0f)
+            {
+                rotSpeed = 20.0f;
+            }
+
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (isLeft == false && isRolling == false)
@@ -59,7 +80,7 @@ public class PlayerMove : MonoBehaviour
                 if (ptXchar == 0)
                 {
                     target = new Vector3(-3.5f, this.transform.position.y, this.transform.position.z);
-                    if(isBoarding == true)
+                    if (isBoarding == true)
                     {
                         anim.CrossFade("Boardshorting", 0.1f);
 
@@ -70,7 +91,7 @@ public class PlayerMove : MonoBehaviour
                     }
                     isLeft = true;
                 }
-                else if(ptXchar == 1)
+                else if (ptXchar == 1)
                 {
                     target = new Vector3(0, this.transform.position.y, this.transform.position.z);
                     if (isBoarding == true)
@@ -107,7 +128,7 @@ public class PlayerMove : MonoBehaviour
                     }
                     isRight = true;
                 }
-                else if(ptXchar == -1)
+                else if (ptXchar == -1)
                 {
                     target = new Vector3(0, this.transform.position.y, this.transform.position.z);
                     if (isBoarding == true)
@@ -149,10 +170,10 @@ public class PlayerMove : MonoBehaviour
             mycoll.size = new Vector3(0.5f, 1.0f, 1.0f);
             mycoll.center = new Vector3(0, 0.5f, 0);
             myRigid.AddForce(Vector3.down * 15.0f, ForceMode.Impulse);
-            if(isBoarding == true)
+            if (isBoarding == true)
             {
                 anim.CrossFade("BoardRoll", 0.1f);
-                
+
             }
             else
             {
@@ -160,8 +181,9 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (isBoarding) return;
             anim.CrossFade("Boarding", 0);
             isBoarding = true;
         }
@@ -186,7 +208,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     ptXchar--;
                     isLeft = false;
-                    
+
                 }
             }
             else
@@ -229,8 +251,18 @@ public class PlayerMove : MonoBehaviour
             mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
             mycoll.center = new Vector3(0, 1.1f, 0);
         }
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.BoardRoll") &&
+            anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+        {
+            isRolling = false;
+            mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+            mycoll.center = new Vector3(0, 1.1f, 0);
+        }
 
-       
+        if(isRolling && isBoarding)
+        {
+            _board.transform.rotation = Quaternion.Euler(new Vector3(0, 90.0f, 0));
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -280,15 +312,38 @@ public class PlayerMove : MonoBehaviour
 
         if(collision.gameObject.layer == 12)
         {
-            anim.CrossFade("BackDeath", 0.1f);
-            dead = true;
+            if (isBoarding)
+            {
+                Destroy(collision.gameObject);
+                anim.CrossFade("Fast Run", 0);
+                isBoarding = false;
+                _board.SetActive(false);
+                
+            }
+            else
+            {
+                anim.CrossFade("BackDeath", 0.1f);
+                dead = true;
+
+            }
+            
         }
         else if (collision.gameObject.layer == 13)
         {
-            anim.CrossFade("Fall Flat", 0.1f);
-            
-            dead = true;
+            if (isBoarding)
+            {
+                Destroy(collision.gameObject);
+                anim.CrossFade("Fast Run", 0);
+                isBoarding = false;
+                _board.SetActive(false);
+                
+            }
+            else
+            {
+                anim.CrossFade("Fall Flat", 0.1f);
 
+                dead = true;
+            }
         }
 
     }

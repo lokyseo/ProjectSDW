@@ -79,4 +79,9 @@ public class TabToStart : MonoBehaviour
 
         
     }
+
+    public void OnClick_Shop()
+    {
+
+    }
 }

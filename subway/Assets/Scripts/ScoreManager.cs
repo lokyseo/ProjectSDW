@@ -29,8 +29,16 @@ public class ScoreManager : MonoBehaviour
 			if (scoreTimer > 2)
 			{
 				scoreTimer = 0;
-				UIScript._curscore += 50;
-				if (UIScript._curscore > UIScript._bestscore)
+                if(PlayerMove.isStar)
+                {
+                    UIScript._curscore += 100;
+                }
+                else
+                {
+                    UIScript._curscore += 50;
+                }
+
+                if (UIScript._curscore > UIScript._bestscore)
 				{
 					PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
 				}

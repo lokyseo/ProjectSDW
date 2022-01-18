@@ -25,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody myRigid;
     public Animator anim;
     private BoxCollider mycoll;    
+
     private float moveSpeed = 5.0f;
     private int ptXchar;
     private Vector3 target;
@@ -34,7 +35,14 @@ public class PlayerMove : MonoBehaviour
     private bool isRolling;
     private bool isBoarding;
     private float rotSpeed;
+
+    //아이템
     public GameObject _board;
+    private float boardTime;
+    private bool isSuper;
+    private float superTime;
+    public static bool isStar;
+    private float starTime;
 
     private void Start()
     {
@@ -42,14 +50,22 @@ public class PlayerMove : MonoBehaviour
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
         mycoll = this.GetComponent<BoxCollider>();
+
         isJumping = false;
         isLeft = false;
         isRight = false;
         isRolling = false;
         isBoarding = false;
+        isSuper = false;
+        isStar = false;
+
         ptXchar = 0;
         rotSpeed = 20.0f;
         _board.SetActive(false);
+
+        boardTime = 30.0f;
+        superTime = 10.0f;
+        starTime = 10.0f;
     }
 
     private void Update()
@@ -57,21 +73,6 @@ public class PlayerMove : MonoBehaviour
         if (PlayerMove.dead) return;
 
         myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
-
-        if (isBoarding)
-        {
-            _board.SetActive(true);
-            _board.transform.Rotate(new Vector3(0, rotSpeed * Time.deltaTime, 0));
-            if (_board.transform.rotation.eulerAngles.y > 100.0f)
-            {
-                rotSpeed = -20.0f;
-            }
-            if (_board.transform.rotation.eulerAngles.y < 80.0f)
-            {
-                rotSpeed = 20.0f;
-            }
-
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -263,6 +264,53 @@ public class PlayerMove : MonoBehaviour
         {
             _board.transform.rotation = Quaternion.Euler(new Vector3(0, 90.0f, 0));
         }
+
+        //아이템 시간제한
+        if (isBoarding)
+        {
+            boardTime -= Time.deltaTime;
+           
+
+            _board.SetActive(true);
+            _board.transform.Rotate(new Vector3(0, rotSpeed * Time.deltaTime, 0));
+            if (_board.transform.rotation.eulerAngles.y > 100.0f)
+            {
+                rotSpeed = -20.0f;
+            }
+            if (_board.transform.rotation.eulerAngles.y < 80.0f)
+            {
+                rotSpeed = 20.0f;
+            }
+
+            if (boardTime < 0)
+            {
+                anim.CrossFade("Fast Run", 0);
+                _board.SetActive(false);
+                boardTime = 30.0f;
+                Debug.Log(boardTime);
+                isBoarding = false;
+            }
+        }
+
+        if(isStar)
+        {
+            starTime -= Time.deltaTime;
+            if(starTime < 0)
+            {
+                isStar = false;
+                starTime = 10.0f;
+            }
+        }
+
+        if(isSuper)
+        {
+            superTime -= Time.deltaTime;
+            if (superTime < 0)
+            {
+                isSuper = false;
+                superTime = 10.0f;
+            }
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -334,9 +382,8 @@ public class PlayerMove : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 anim.CrossFade("Fast Run", 0);
-                isBoarding = false;
                 _board.SetActive(false);
-                
+                isBoarding = false;
             }
             else
             {
@@ -347,11 +394,20 @@ public class PlayerMove : MonoBehaviour
         }
 
     }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 11)
         {
-            UIScript._curscore += 10;
+            if (isStar)
+            {
+                UIScript._curscore += 20;
+            }
+            else
+            {
+                UIScript._curscore += 10;
+            }
+
             UIScript._money += 10;
             PlayerPrefs.SetInt(UIScript._txtMoney, UIScript._money);
             if(UIScript._curscore > UIScript._bestscore)
@@ -359,6 +415,16 @@ public class PlayerMove : MonoBehaviour
                 PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
             }
             Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.layer == 15)//별
+        {
+            isStar = true;
+        }
+
+        if(other.gameObject.layer == 16)//슈퍼 점프
+        {
+            isSuper = true;
         }
     }
 

@@ -20,6 +20,8 @@ public class TabToStart : MonoBehaviour
     public GameObject buttonImage;
     Image _imageColor;
 
+    public GameObject shopBtn;
+
     void Start()
     {
         _imageColor = buttonImage.GetComponent<Image>();
@@ -77,11 +79,8 @@ public class TabToStart : MonoBehaviour
         _text.SetActive(false);
         playeranim.CrossFade("Reacting", 0.1f);
 
-        
+        shopBtn.SetActive(false);
     }
 
-    public void OnClick_Shop()
-    {
-
-    }
+    
 }

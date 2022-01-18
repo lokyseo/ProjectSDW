@@ -31,6 +31,9 @@ public class UIScript : MonoBehaviour
 	public Text _textMoney;
 	public Text _textBest;
 
+    public GameObject _canvasStart;
+    public GameObject _canvasShop;
+
 	void Start()
     {
 		_money = PlayerPrefs.GetInt(_txtMoney, 0);
@@ -40,7 +43,19 @@ public class UIScript : MonoBehaviour
 		_textBest.text = $"Best Score : {_bestscore.ToString()}";
 
 		_curscore = 0;
+
+        _canvasShop.SetActive(false);
 	}
 
-    
+    public void OnClick_Shop()
+    {
+        _canvasStart.SetActive(false);
+        _canvasShop.SetActive(true);
+    }
+
+    public void OnClick_CloseShop()
+    {
+        _canvasStart.SetActive(true);
+        _canvasShop.SetActive(false);
+    }
 }

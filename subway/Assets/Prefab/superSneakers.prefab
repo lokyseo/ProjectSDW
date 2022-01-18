@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6391861351161255660}
   - component: {fileID: 5228695702750493693}
   - component: {fileID: 2956712410033154289}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: superSneakers_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478538848087726722}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1.1614616
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6754029715549324590}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: superSneakers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 6264773788260392852}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 482007871560153279}
   m_Father: {fileID: 0}

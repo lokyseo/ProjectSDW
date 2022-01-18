@@ -1,20 +1,26 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class MoveObjects : MonoBehaviour {
+public class MoveObjects : MonoBehaviour
+{
+    GameObject item;
 
-	private float moveSpeed;
-	private float addSpeed;
-	private float speedTimer;
+    private float moveSpeed;
+    private float addSpeed;
+    private float speedTimer;
 
-	void Start ()
+
+    void Start ()
     {
 		moveSpeed = 10.0f;
-		addSpeed = 0.1f;
+		addSpeed = 0.2f;
 		speedTimer = 0;
-	}
-	
-	void Update ()
+
+    }
+
+    void Update ()
     {
 		if (!PlayerMove.dead)
         {
@@ -24,7 +30,8 @@ public class MoveObjects : MonoBehaviour {
 				speedTimer = 0;
 				moveSpeed += addSpeed;
 				Debug.Log("increased");
-			}
+                
+            }
 			transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
 		}
 	}

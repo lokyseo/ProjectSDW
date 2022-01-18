@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6716625278743683538}
   - component: {fileID: 1275824428427719853}
   - component: {fileID: 916737518250599192}
-  m_Layer: 0
+  - component: {fileID: 7317909984386543121}
+  m_Layer: 15
   m_Name: powerups_2xMultiplier_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5023137281088848666}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.14, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6016266518583201585}
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &7317909984386543121
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023137281088848666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.808869
+  m_Center: {x: 0.00000023841858, y: 0, z: 0.00022087991}
 --- !u!1 &6356199932340868491
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6016266518583201585}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: powerups_2xMultiplier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 6356199932340868491}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 6716625278743683538}
   m_Father: {fileID: 0}

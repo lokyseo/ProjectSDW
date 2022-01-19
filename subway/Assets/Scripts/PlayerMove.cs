@@ -44,6 +44,9 @@ public class PlayerMove : MonoBehaviour
     public static bool isStar;
     private float starTime;
 
+    //추적자
+    public static bool _ischasing;
+
     private void Start()
     {
         dead = false;
@@ -58,14 +61,16 @@ public class PlayerMove : MonoBehaviour
         isBoarding = false;
         isSuper = false;
         isStar = false;
+        _ischasing = true;
 
         ptXchar = 0;
         rotSpeed = 20.0f;
         _board.SetActive(false);
 
         boardTime = 30.0f;
-        superTime = 10.0f;
-        starTime = 10.0f;
+        superTime = 10.0f + UIScript._upgradeSuperJump * 2;
+        starTime = 10.0f + UIScript._upgradeStar * 2;
+
     }
 
     private void Update()
@@ -80,7 +85,7 @@ public class PlayerMove : MonoBehaviour
             {
                 if (ptXchar == 0)
                 {
-                    target = new Vector3(-3.5f, this.transform.position.y, this.transform.position.z);
+                    target = new Vector3(-3.8f, this.transform.position.y, this.transform.position.z);
                     if (isBoarding == true)
                     {
                         anim.CrossFade("Boardshorting", 0.1f);
@@ -116,7 +121,7 @@ public class PlayerMove : MonoBehaviour
 
                 if (ptXchar == 0)
                 {
-                    target = new Vector3(3.5f, this.transform.position.y, this.transform.position.z);
+                    target = new Vector3(3.8f, this.transform.position.y, this.transform.position.z);
                     if (isBoarding == true)
                     {
                         anim.CrossFade("Boardshorting", 0.1f);
@@ -154,7 +159,14 @@ public class PlayerMove : MonoBehaviour
                 isRolling = false;
                 mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
                 mycoll.center = new Vector3(0, 1.1f, 0);
-                myRigid.AddForce(Vector3.up * 18.0f, ForceMode.Impulse);
+                if(isSuper)
+                {
+                    myRigid.AddForce(Vector3.up * 23.5f, ForceMode.Impulse);
+                }
+                else
+                {
+                    myRigid.AddForce(Vector3.up * 16.5f, ForceMode.Impulse);
+                }
                 if (isBoarding == true)
                 {
                     anim.CrossFade("BoardJumping", 0.1f);
@@ -185,6 +197,8 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isBoarding) return;
+            if (UIScript._countBoard <= 0) return;
+            UIScript._countBoard--;
             anim.CrossFade("Boarding", 0);
             isBoarding = true;
         }
@@ -311,6 +325,8 @@ public class PlayerMove : MonoBehaviour
                 superTime = 10.0f;
             }
         }
+        //
+       
     }
 
     void OnCollisionEnter(Collision collision)
@@ -320,8 +336,9 @@ public class PlayerMove : MonoBehaviour
             isJumping = false;
         }
 
-        if(collision.gameObject.layer == 14)
+        if(collision.gameObject.layer == 14) // 옆충돌
         {
+            _ischasing = true;
             if(isLeft)
             {
                 anim.CrossFade("leftHit", 0.0f);
@@ -376,28 +393,28 @@ public class PlayerMove : MonoBehaviour
             }
             
         }
-        else if (collision.gameObject.layer == 13)
-        {
-            if (isBoarding)
-            {
-                Destroy(collision.gameObject);
-                anim.CrossFade("Fast Run", 0);
-                _board.SetActive(false);
-                isBoarding = false;
-            }
-            else
-            {
-                anim.CrossFade("Fall Flat", 0.1f);
-
-                dead = true;
-            }
-        }
+        //else if (collision.gameObject.layer == 13)
+        //{
+        //    if (isBoarding)
+        //    {
+        //        Destroy(collision.gameObject);
+        //        anim.CrossFade("Fast Run", 0);
+        //        _board.SetActive(false);
+        //        isBoarding = false;
+        //    }
+        //    else
+        //    {
+        //        anim.CrossFade("Fall Flat", 0.1f);
+        //
+        //        dead = true;
+        //    }
+       // }
 
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 11)
+        if (other.gameObject.layer == 11)//코인
         {
             if (isStar)
             {
@@ -420,11 +437,14 @@ public class PlayerMove : MonoBehaviour
         if(other.gameObject.layer == 15)//별
         {
             isStar = true;
+            Destroy(other.gameObject);
+
         }
 
         if(other.gameObject.layer == 16)//슈퍼 점프
         {
             isSuper = true;
+            Destroy(other.gameObject);
         }
     }
 

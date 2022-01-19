@@ -15,7 +15,7 @@ public class MoveObjects : MonoBehaviour
     void Start ()
     {
 		moveSpeed = 10.0f;
-		addSpeed = 0.2f;
+		addSpeed = 0.5f;
 		speedTimer = 0;
 
     }

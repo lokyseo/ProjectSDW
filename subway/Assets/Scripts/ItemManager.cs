@@ -14,7 +14,7 @@ public class ItemManager : MonoBehaviour
     void Start()
     {
         spawnPercent = Random.Range(0, 4);
-        if (spawnPercent == 0 || spawnPercent == 1)
+        if (spawnPercent == 0)
         {
             return;
         }
@@ -23,7 +23,7 @@ public class ItemManager : MonoBehaviour
             randpt = Random.Range(0, _itempoint.Length);
             item = Instantiate(_star, _itempoint[randpt].position, Quaternion.identity);
         }
-        else if (spawnPercent == 3)
+        else if (spawnPercent == 3 || spawnPercent == 1)
         {
             randpt = Random.Range(0, _itempoint.Length);
             item = Instantiate(_superJump, _itempoint[randpt].position, Quaternion.identity);

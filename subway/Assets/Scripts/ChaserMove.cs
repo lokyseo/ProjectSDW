@@ -16,12 +16,16 @@ public class ChaserMove : MonoBehaviour
 
     void Update()
     {
-        if(ischase)
+        if(PlayerMove._ischasing)
         {
+            Vector3 target = _player.transform.position + new Vector3(0, 0, -2);
+
+            this.transform.position =
+               Vector3.MoveTowards(this.transform.position, target, 2 * Time.deltaTime);
             chaseTime -= Time.deltaTime;
             if(chaseTime <= 0.0f)
             {
-                ischase = false;
+                PlayerMove._ischasing = false;
                 chaseTime = 5.0f;
             }
         }

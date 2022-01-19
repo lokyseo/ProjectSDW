@@ -9,21 +9,26 @@ public class ScoreManager : MonoBehaviour
 
 	public Text _score;
 	private float scoreTimer;
-	
+
+    public Text _board;
+
 	void Start()
 	{
 		_money.text = " : " + UIScript._money;
 
 		_score.text = "Score : " + UIScript._curscore;
 		scoreTimer = 0;
+
+        _board.text = "X " + UIScript._countBoard;
 	}
 
 	void Update()
 	{
 		_score.text = "Score : " + UIScript._curscore;
 		_money.text = " : " + UIScript._money;
+        _board.text = "X " + UIScript._countBoard;
 
-		if (!PlayerMove.dead)
+        if (!PlayerMove.dead)
 		{
 			scoreTimer += Time.deltaTime;
 			if (scoreTimer > 2)

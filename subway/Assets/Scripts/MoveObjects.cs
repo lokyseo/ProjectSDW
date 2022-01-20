@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class MoveObjects : MonoBehaviour
 {
-    GameObject item;
-
     private float moveSpeed;
     private float addSpeed;
     private float speedTimer;
@@ -34,5 +32,6 @@ public class MoveObjects : MonoBehaviour
             }
 			transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
 		}
+       
 	}
 }

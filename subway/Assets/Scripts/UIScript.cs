@@ -67,7 +67,7 @@ public class UIScript : MonoBehaviour
         _curscore = 0;
 
         _canvasShop.SetActive(false);
-        _countBoard = 0;
+        _countBoard = 1;
         _upgradeSuperJump = 0;
         _upgradeStar = 0;
         

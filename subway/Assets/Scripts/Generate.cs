@@ -17,9 +17,10 @@ public class Generate : MonoBehaviour {
 		for (int z = 0; z < 5; z++)
         {
 			rand = Random.Range(0, premades.Length);
-			currentPremades.Add((Transform)Instantiate
+            currentPremades.Add((Transform)Instantiate
                 (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z+40), Quaternion.identity) as Transform);
-			Instantiate(background, new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z-10), Quaternion.identity);
+            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z+40), Quaternion.identity);
+            Instantiate(background, new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z-10), Quaternion.identity);
 		}
 	}
 	

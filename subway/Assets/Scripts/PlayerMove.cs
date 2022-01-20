@@ -33,11 +33,11 @@ public class PlayerMove : MonoBehaviour
     private bool isRight;
     private bool isJumping;
     private bool isRolling;
-    private bool isBoarding;
     private float rotSpeed;
 
     //아이템
     public GameObject _board;
+    public static bool isBoarding;
     private float boardTime;
     private bool isSuper;
     private float superTime;
@@ -46,6 +46,7 @@ public class PlayerMove : MonoBehaviour
 
     //추적자
     public static bool _ischasing;
+    public static bool _isleftDead;
 
     private void Start()
     {
@@ -62,6 +63,7 @@ public class PlayerMove : MonoBehaviour
         isSuper = false;
         isStar = false;
         _ischasing = true;
+        _isleftDead = false;
 
         ptXchar = 0;
         rotSpeed = 20.0f;
@@ -161,11 +163,11 @@ public class PlayerMove : MonoBehaviour
                 mycoll.center = new Vector3(0, 1.1f, 0);
                 if(isSuper)
                 {
-                    myRigid.AddForce(Vector3.up * 23.5f, ForceMode.Impulse);
+                    myRigid.AddForce(Vector3.up * 21.0f, ForceMode.Impulse);
                 }
                 else
                 {
-                    myRigid.AddForce(Vector3.up * 16.5f, ForceMode.Impulse);
+                    myRigid.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
                 }
                 if (isBoarding == true)
                 {
@@ -338,8 +340,20 @@ public class PlayerMove : MonoBehaviour
 
         if(collision.gameObject.layer == 14) // 옆충돌
         {
-            _ischasing = true;
-            if(isLeft)
+            if(_ischasing == false)
+            {
+                _ischasing = true;
+            }
+            else
+            {
+                Invoke("LeftDie", 0.8f);
+                dead = true;
+                _isleftDead = true;
+                
+
+            }
+
+            if (isLeft)
             {
                 anim.CrossFade("leftHit", 0.0f);
                 isLeft = false;
@@ -393,22 +407,7 @@ public class PlayerMove : MonoBehaviour
             }
             
         }
-        //else if (collision.gameObject.layer == 13)
-        //{
-        //    if (isBoarding)
-        //    {
-        //        Destroy(collision.gameObject);
-        //        anim.CrossFade("Fast Run", 0);
-        //        _board.SetActive(false);
-        //        isBoarding = false;
-        //    }
-        //    else
-        //    {
-        //        anim.CrossFade("Fall Flat", 0.1f);
-        //
-        //        dead = true;
-        //    }
-       // }
+       
 
     }
 
@@ -448,5 +447,9 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    void LeftDie()
+    {
+        anim.CrossFade("Fall Flat", 0);
+    }
 
 }

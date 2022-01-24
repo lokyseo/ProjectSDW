@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -16,6 +17,15 @@ public class ScoreManager : MonoBehaviour
     public GameObject bslider;
     Slider slTimer;
 
+    public GameObject SuperSlider;
+    Slider superTime;
+    public GameObject ItemUI;
+
+    //사망 후
+    public GameObject died;
+    public Text bestS;
+    public Text curS;
+
     void Start()
     {
         _money.text = " : " + UIScript._money;
@@ -26,7 +36,11 @@ public class ScoreManager : MonoBehaviour
         _board.text = "X " + UIScript._countBoard;
 
         slTimer = bslider.GetComponent<Slider>();
+        superTime = SuperSlider.GetComponent<Slider>();
+        superTime.value = 10 + UIScript._upgradeSuperJump * 2;
+        ItemUI.SetActive(false);
         bslider.SetActive(false);
+        died.SetActive(false);
     }
 
     void Update()
@@ -37,15 +51,27 @@ public class ScoreManager : MonoBehaviour
         if (PlayerMove.isBoarding)
         {
             bslider.SetActive(true);
-            _board.text = "<color=green>X " + UIScript._countBoard + "</color>"; 
+            _board.text = "<color=green>X " + UIScript._countBoard + "</color>";
             slTimer.value -= Time.deltaTime;
-         
+
         }
         else
         {
             _board.text = "X " + UIScript._countBoard;
             bslider.SetActive(false);
             slTimer.value = 30.0f;
+
+        }
+
+        if(PlayerMove.isSuper)
+        {
+            ItemUI.SetActive(true);
+            superTime.value -= Time.deltaTime;
+        }
+        else
+        {
+            ItemUI.SetActive(false);
+            superTime.value = 10 + UIScript._upgradeSuperJump * 2;
 
         }
 
@@ -76,11 +102,32 @@ public class ScoreManager : MonoBehaviour
                 if (UIScript._curscore > UIScript._bestscore)
                 {
                     PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
+                    UIScript._bestscore = UIScript._curscore;
                 }
             }
         }
+        else
+        {
+            Invoke("callDieCanvas", 2.0f);
+            bestS.text = "Best : " + UIScript._bestscore;
+            curS.text = "Score : " + UIScript._curscore;
+        }
 
     }
+
+    void callDieCanvas()
+    {
+        died.SetActive(true);
+    }
+
+    public void OnClick_Retry()
+    {
+        SceneManager.LoadScene("SampleScene");
+        UIScript._curscore = 0;
+    }
+
+    public void OnClick_Title()
+    {
+        SceneManager.LoadScene("Start");
+    }
 }
-    
-   

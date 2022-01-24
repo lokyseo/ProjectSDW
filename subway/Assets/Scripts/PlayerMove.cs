@@ -39,7 +39,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject _board;
     public static bool isBoarding;
     private float boardTime;
-    private bool isSuper;
+    public static bool isSuper;
     private float superTime;
     public static bool isStar;
     private float starTime;
@@ -389,15 +389,18 @@ public class PlayerMove : MonoBehaviour
 
         }
 
+
         if(collision.gameObject.layer == 12)
         {
             if (isBoarding)
             {
                 Destroy(collision.gameObject);
                 anim.CrossFade("Fast Run", 0);
-                isBoarding = false;
-                _board.SetActive(false);
+                boardTime = 30.0f;
                 
+             
+                _board.SetActive(false);
+                boardTime = 0.0f;
             }
             else
             {

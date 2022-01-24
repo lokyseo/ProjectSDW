@@ -16,7 +16,6 @@ public class ItemManager : MonoBehaviour
         spawnPercent = Random.Range(0, 4);
         if (spawnPercent == 0 || spawnPercent == 1)
         {
-            return;
         }
         else if (spawnPercent == 2)
         {
@@ -35,7 +34,6 @@ public class ItemManager : MonoBehaviour
     {
         if (spawnPercent == 0 || spawnPercent == 1)
         {
-            return;
         }
         else if (spawnPercent == 2)
         {

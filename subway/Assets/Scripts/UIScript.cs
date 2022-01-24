@@ -18,7 +18,11 @@ public class UIScript : MonoBehaviour
 	public static int _curscore;
 	public static string _txtBestscore = "Best";
 
-	private void Awake()
+    public static int _countBoard;
+    public static int _upgradeSuperJump;
+    public static int _upgradeStar;
+
+    private void Awake()
 	{
 		if (instance)
 		{
@@ -35,10 +39,6 @@ public class UIScript : MonoBehaviour
     public GameObject _canvasShop;
 
     // 상점
-    public static int _countBoard;
-    public static int _upgradeSuperJump;
-    public static int _upgradeStar;
-
     public Text txtcountBoard;
     public Text uicountBoard;
 
@@ -50,7 +50,8 @@ public class UIScript : MonoBehaviour
 
     public Text priceSuperjump;
     public Text priceStar;
-
+    int superPrice;
+    int starPrice;
 
     void Start()
     {
@@ -60,17 +61,20 @@ public class UIScript : MonoBehaviour
 		_bestscore = PlayerPrefs.GetInt(_txtBestscore, 0);
 		_textBest.text = $"Best Score : {_bestscore.ToString()}";
 
-        priceSuperjump.text = "1000";
-        priceStar.text = "1200";
-        txtcountBoard.text = " X " + _countBoard;
+        superPrice = 1000 + (500 * _upgradeSuperJump);
+        priceSuperjump.text = "" + superPrice;
+        txtTimeSuperJump.text = (10 + _upgradeSuperJump * 2) + "/s";
+        txtupSuperJump.text = _upgradeSuperJump + " / 6";
 
+        starPrice = 1200 + 600 * _upgradeStar;
+        priceStar.text = "" + starPrice;
+        txtcountBoard.text = " X " + _countBoard;
+        txtTimeStar.text = (10 + _upgradeStar * 2) + "/s";
+        txtupStar.text = _upgradeStar + " / 6";
         _curscore = 0;
 
         _canvasShop.SetActive(false);
-        _countBoard = 1;
-        _upgradeSuperJump = 0;
-        _upgradeStar = 0;
-        
+        _money += 10000;
     }
 
     void Update()
@@ -107,9 +111,9 @@ public class UIScript : MonoBehaviour
         if (upgradeCount <= _upgradeSuperJump) return;
         _money -= 1000 + (500 * _upgradeSuperJump);
         _upgradeSuperJump++;
-        int price = 1000 + (500 * _upgradeSuperJump);
+        superPrice = 1000 + (500 * _upgradeSuperJump);
         //txt
-        priceSuperjump.text = "" + price;
+        priceSuperjump.text = "" + superPrice;
         txtTimeSuperJump.text = (10 + _upgradeSuperJump * 2) + "/s";
         txtupSuperJump.text = _upgradeSuperJump + " / 6";
     }
@@ -120,15 +124,39 @@ public class UIScript : MonoBehaviour
         if (upgradeCount <= _upgradeStar) return;
         _money -= 1200 + 600 * _upgradeStar;
         _upgradeStar++;
-        int price = 1200 + 600 * _upgradeStar;
+        starPrice = 1200 + 600 * _upgradeStar;
 
-        priceStar.text = "" + price;
+        priceStar.text = "" + starPrice;
         txtTimeStar.text = (10 + _upgradeStar * 2) + "/s";
         txtupStar.text = _upgradeStar + " / 6";
     }
 
     public void Purchase_Mystery()
     {
+        int rand = Random.Range(0, 5);
 
+        _money -= 500;
+
+        if(rand == 0)
+        {
+
+        }
+        else if(rand == 1)
+        {
+            _money += 500;
+        }
+        else if (rand == 2)
+        {
+            _money += 1000;
+        }
+        else if (rand == 3)
+        {
+            _countBoard++;
+
+        }
+        else if (rand == 4)
+        {
+            _countBoard += 2;
+        }
     }
 }

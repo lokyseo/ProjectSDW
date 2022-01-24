@@ -9,26 +9,28 @@ public class Generate : MonoBehaviour {
 	public Transform background;
 	public List<Transform> currentPremades;
 	int rand;
+    int co;
 
 
 	void Start()
     {
 		currentPremades = new List<Transform>();
-		for (int z = 0; z < 5; z++)
+		for (int iz = 0; iz < 5; iz++)
         {
 			rand = Random.Range(0, premades.Length);
             currentPremades.Add((Transform)Instantiate
-                (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z+40), Quaternion.identity) as Transform);
-            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z+40), Quaternion.identity);
-            Instantiate(background, new Vector3(startingPt.x, startingPt.y, startingPt.z+140*z-10), Quaternion.identity);
+                (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz+40), Quaternion.identity) as Transform);
+            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz+40), Quaternion.identity);
+            Instantiate(background, new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz-10), Quaternion.identity);
 		}
+        co = 0;
 	}
 	
 	void Update ()
     {
-		if (currentPremades[0].position.z < -120)
+		if (currentPremades[co].position.z < -120)
         {
-			Destroy((currentPremades[0] as Transform).gameObject);
+			Destroy((currentPremades[co] as Transform).gameObject);
 			currentPremades.RemoveAt(0);
 			rand = Random.Range (0, premades.Length);
 			Debug.Log(premades.Length);

@@ -24,13 +24,21 @@ public class ChaserMove : MonoBehaviour
     void Update()
     {
         if (moveStop) return;
+
+        if(PlayerMove.againcollision)
+        {
+            PlayerMove._ischasing = true;
+        }
+
         if(PlayerMove._ischasing)
         {
             Vector3 target = _player.transform.position + new Vector3(0, 0, -2);
 
             this.transform.position =
                Vector3.MoveTowards(this.transform.position, target, 2 * Time.deltaTime);
+
             chaseTime -= Time.deltaTime;
+
             if(PlayerMove._isleftDead)
             {
                 this.transform.position = new Vector3(transform.position.x, transform.position.y, -4);
@@ -41,8 +49,11 @@ public class ChaserMove : MonoBehaviour
             if(chaseTime <= 0.0f)
             {
                 PlayerMove._ischasing = false;
+                PlayerMove.againcollision = false;
                 chaseTime = 5.0f;
             }
+
+            
         }
         else
         {
@@ -52,4 +63,6 @@ public class ChaserMove : MonoBehaviour
                Vector3.MoveTowards(this.transform.position, target, Time.deltaTime);
         }
     }
+
+    
 }

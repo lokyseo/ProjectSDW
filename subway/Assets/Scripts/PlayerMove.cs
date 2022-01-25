@@ -44,9 +44,13 @@ public class PlayerMove : MonoBehaviour
     public static bool isStar;
     private float starTime;
 
+    public static bool againSuper;
+    public static bool againStar;
+
     //추적자
     public static bool _ischasing;
     public static bool _isleftDead;
+    public static bool againcollision;
 
     private void Start()
     {
@@ -64,6 +68,8 @@ public class PlayerMove : MonoBehaviour
         isStar = false;
         _ischasing = true;
         _isleftDead = false;
+        againSuper = false;
+        againStar = false;
 
         ptXchar = 0;
         rotSpeed = 20.0f;
@@ -79,7 +85,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (PlayerMove.dead) return;
 
-        myRigid.AddForce(Vector3.down * 0.3f, ForceMode.Impulse);
+        myRigid.AddForce(Vector3.down * 0.4f, ForceMode.Impulse);
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -310,6 +316,12 @@ public class PlayerMove : MonoBehaviour
 
         if(isStar)
         {
+            if(againStar)
+            {
+                starTime = 10.0f + UIScript._upgradeStar * 2;
+                againStar = false;
+            }
+
             starTime -= Time.deltaTime;
             if(starTime < 0)
             {
@@ -320,6 +332,11 @@ public class PlayerMove : MonoBehaviour
 
         if(isSuper)
         {
+            if(againSuper)
+            {
+                superTime = 10.0f + UIScript._upgradeSuperJump * 2;
+            }
+
             superTime -= Time.deltaTime;
             if (superTime < 0)
             {
@@ -333,23 +350,27 @@ public class PlayerMove : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 10)
+        if (collision.gameObject.layer == 10)//땅
         {
             isJumping = false;
         }
 
         if(collision.gameObject.layer == 14) // 옆충돌
         {
-            if(_ischasing == false)
+            if(_ischasing)
             {
-                _ischasing = true;
+                if(againcollision)
+                {
+                    _isleftDead = true;
+                    Invoke("leftDie", 0.8f);
+                    dead = true;
+                    againcollision = false;
+                }
+                
             }
             else
             {
-                Invoke("LeftDie", 0.8f);
-                dead = true;
-                _isleftDead = true;
-                
+                againcollision = true;
 
             }
 
@@ -389,8 +410,8 @@ public class PlayerMove : MonoBehaviour
 
         }
 
-
-        if(collision.gameObject.layer == 12)
+        
+        if (collision.gameObject.layer == 12)
         {
             if (isBoarding)
             {
@@ -432,25 +453,40 @@ public class PlayerMove : MonoBehaviour
             if(UIScript._curscore > UIScript._bestscore)
             {
                 PlayerPrefs.SetInt(UIScript._txtBestscore, UIScript._curscore);
+                UIScript._bestscore = UIScript._curscore;
             }
             Destroy(other.gameObject);
         }
 
         if(other.gameObject.layer == 15)//별
         {
-            isStar = true;
+            if(isStar == false)
+            {
+                isStar = true;
+            }
+            else
+            {
+                againStar = true;
+            }
             Destroy(other.gameObject);
 
         }
 
         if(other.gameObject.layer == 16)//슈퍼 점프
         {
-            isSuper = true;
+            if(isSuper == false)
+            {
+                isSuper = true;
+            }
+            else
+            {
+                againSuper = true;
+            }
             Destroy(other.gameObject);
         }
     }
 
-    void LeftDie()
+    void leftDie()
     {
         anim.CrossFade("Fall Flat", 0);
     }

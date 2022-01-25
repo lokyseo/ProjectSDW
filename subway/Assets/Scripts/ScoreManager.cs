@@ -37,6 +37,7 @@ public class ScoreManager : MonoBehaviour
 
         slTimer = bslider.GetComponent<Slider>();
         superTime = SuperSlider.GetComponent<Slider>();
+        superTime.maxValue = 10 + UIScript._upgradeSuperJump * 2;
         superTime.value = 10 + UIScript._upgradeSuperJump * 2;
         ItemUI.SetActive(false);
         bslider.SetActive(false);
@@ -66,6 +67,13 @@ public class ScoreManager : MonoBehaviour
         if(PlayerMove.isSuper)
         {
             ItemUI.SetActive(true);
+            if(PlayerMove.againSuper)
+            {
+                superTime.value = 10 + UIScript._upgradeSuperJump * 2;
+                PlayerMove.againSuper = false;
+
+            }
+
             superTime.value -= Time.deltaTime;
         }
         else

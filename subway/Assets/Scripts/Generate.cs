@@ -15,7 +15,7 @@ public class Generate : MonoBehaviour {
 	void Start()
     {
 		currentPremades = new List<Transform>();
-		for (int iz = 0; iz < 5; iz++)
+		for (int iz = 0; iz < 10; iz++)
         {
 			rand = Random.Range(0, premades.Length);
             currentPremades.Add((Transform)Instantiate

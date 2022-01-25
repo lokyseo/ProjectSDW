@@ -13,7 +13,7 @@ public class MoveObjects : MonoBehaviour
     void Start ()
     {
 		moveSpeed = 10.0f;
-		addSpeed = 0.5f;
+		addSpeed = 1.0f;
 		speedTimer = 0;
 
     }
@@ -23,7 +23,7 @@ public class MoveObjects : MonoBehaviour
 		if (!PlayerMove.dead)
         {
 			speedTimer += Time.deltaTime;
-			if (speedTimer > 10)
+			if (speedTimer > 5)
 			{
 				speedTimer = 0;
 				moveSpeed += addSpeed;
@@ -33,5 +33,12 @@ public class MoveObjects : MonoBehaviour
 			transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
 		}
        
+        if(this.transform.position.z < -160)
+        {
+            if(this.transform.tag == "background")
+            {
+                Destroy(this.gameObject);
+            }
+        }
 	}
 }

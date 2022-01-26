@@ -84,9 +84,6 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         if (PlayerMove.dead) return;
-
-        myRigid.AddForce(Vector3.down * 0.4f, ForceMode.Impulse);
-
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (isLeft == false && isRolling == false)
@@ -344,16 +341,38 @@ public class PlayerMove : MonoBehaviour
                 superTime = 10.0f;
             }
         }
-        //
        
+    }
+
+    public ParticleSystem _ptc_landing;
+    public ParticleSystem _ptc_collision;
+    public ParticleSystem _ptc_getItem;
+    public ParticleSystem _ptc_board;
+    public ParticleSystem _ptc_coin;
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 10)//땅
+        {
+        }
+        else
+        {
+            isJumping = true;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 10)//땅
         {
-            isJumping = false;
+            if(isJumping)
+            {
+                Instantiate(_ptc_landing, this.transform.position, Quaternion.identity);
+                isJumping = false;
+            }
+            
         }
+
 
         if(collision.gameObject.layer == 14) // 옆충돌
         {
@@ -377,6 +396,7 @@ public class PlayerMove : MonoBehaviour
             if (isLeft)
             {
                 anim.CrossFade("leftHit", 0.0f);
+                Instantiate(_ptc_collision, this.transform.position + new Vector3(-0.1f, 1, 0), Quaternion.identity);
                 isLeft = false;
                 if(ptXchar == 0)
                 {
@@ -390,10 +410,11 @@ public class PlayerMove : MonoBehaviour
                        Vector3.Lerp(transform.position, new Vector3(0, 0, 0), moveSpeed * Time.deltaTime);
                 }
             }
+
             if (isRight)
             {
                 anim.CrossFade("rightHit", 0.0f);
-                
+                Instantiate(_ptc_collision, this.transform.position + new Vector3(0.1f,1,0), Quaternion.identity);
 
                 isRight = false;
                 if (ptXchar == 1)
@@ -417,9 +438,10 @@ public class PlayerMove : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 anim.CrossFade("Fast Run", 0);
+                Instantiate(_ptc_board, this.transform.position + new Vector3(0, 1.2f, 0.5f), Quaternion.identity);
+
                 boardTime = 30.0f;
                 
-             
                 _board.SetActive(false);
                 boardTime = 0.0f;
             }
@@ -447,6 +469,7 @@ public class PlayerMove : MonoBehaviour
             {
                 UIScript._curscore += 10;
             }
+            Instantiate(_ptc_coin, this.transform.position + new Vector3(0, 1, 0.3f), Quaternion.identity);
 
             UIScript._money += 10;
             PlayerPrefs.SetInt(UIScript._txtMoney, UIScript._money);
@@ -468,6 +491,8 @@ public class PlayerMove : MonoBehaviour
             {
                 againStar = true;
             }
+            Instantiate(_ptc_getItem, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+
             Destroy(other.gameObject);
 
         }
@@ -482,6 +507,7 @@ public class PlayerMove : MonoBehaviour
             {
                 againSuper = true;
             }
+            Instantiate(_ptc_getItem, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             Destroy(other.gameObject);
         }
     }

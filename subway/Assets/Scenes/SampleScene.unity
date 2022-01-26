@@ -362,7 +362,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 2.2, z: 1}
+  m_Size: {x: 0.5, y: 2.2, z: 0.5}
   m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!4 &428124155
 Transform:
@@ -399,6 +399,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 5866666021086106847}
   _board: {fileID: 2070880701838060664}
+  _ptc_landing: {fileID: 19800000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
+  _ptc_collision: {fileID: 19800000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+  _ptc_getItem: {fileID: 19800004, guid: 757df604761b8ef42831192c70ee1099, type: 3}
+  _ptc_board: {fileID: 198194127032045410, guid: 46876a2780737ec45a19d62f88e5ce56,
+    type: 3}
+  _ptc_coin: {fileID: 19800000, guid: 3156817f64ec68948ad6bb26569b9ef5, type: 3}
 --- !u!54 &428124157
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1059,7 +1065,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 64.7, y: -155.1}
+  m_AnchoredPosition: {x: 85, y: -155.1}
   m_SizeDelta: {x: 240, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &791860977
@@ -1486,6 +1492,7 @@ MonoBehaviour:
   premades:
   - {fileID: 485838, guid: 4ae4247cc2f38134cb1b0fa215beb5e2, type: 3}
   - {fileID: 485838, guid: de086ed47a4e78147a4184e694f60391, type: 3}
+  - {fileID: 485838, guid: e3993e845300ed4458ecdaf94c705218, type: 3}
   background: {fileID: 488004, guid: b2bbae63de13a024fbd3651acfcee35f, type: 3}
   currentPremades: []
 --- !u!4 &1010869835
@@ -2016,7 +2023,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -600, y: -50}
+  m_AnchoredPosition: {x: -558, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1355997246

@@ -6,6 +6,7 @@ public class ItemManager : MonoBehaviour
 {
     public GameObject _star;
     public GameObject _superJump;
+    
     public Transform[] _itempoint;
     GameObject item;
     int randpt;
@@ -13,7 +14,7 @@ public class ItemManager : MonoBehaviour
 
     void Start()
     {
-        spawnPercent = Random.Range(0, 4);
+        spawnPercent = Random.Range(0, 5);
         if (spawnPercent == 0 || spawnPercent == 1)
         {
         }
@@ -27,7 +28,6 @@ public class ItemManager : MonoBehaviour
             randpt = Random.Range(0, _itempoint.Length);
             item = Instantiate(_superJump, _itempoint[randpt].position, Quaternion.identity);
         }
-
     }
 
     void Update()

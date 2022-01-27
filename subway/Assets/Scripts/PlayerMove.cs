@@ -79,6 +79,9 @@ public class PlayerMove : MonoBehaviour
         superTime = 10.0f + UIScript._upgradeSuperJump * 2;
         starTime = 10.0f + UIScript._upgradeStar * 2;
 
+        mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+        mycoll.center = new Vector3(0, 1.1f, 0);
+
     }
 
     private void Update()
@@ -214,7 +217,7 @@ public class PlayerMove : MonoBehaviour
             {
                 this.transform.position =
                     Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar--;
                     isLeft = false;
@@ -224,7 +227,7 @@ public class PlayerMove : MonoBehaviour
             else if (ptXchar == 1)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar--;
                     isLeft = false;
@@ -242,7 +245,7 @@ public class PlayerMove : MonoBehaviour
             if (ptXchar == 0)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar++;
                     isRight = false;
@@ -252,7 +255,7 @@ public class PlayerMove : MonoBehaviour
             else if (ptXchar == -1)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.5f)
+                if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar++;
                     isRight = false;
@@ -350,16 +353,16 @@ public class PlayerMove : MonoBehaviour
     public ParticleSystem _ptc_board;
     public ParticleSystem _ptc_coin;
 
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.layer == 10)//땅
-        {
-        }
-        else
-        {
-            isJumping = true;
-        }
-    }
+  // void OnCollisionStay(Collision collision)
+  // {
+  //     if (collision.gameObject.layer == 10)//땅
+  //     {
+  //     }
+  //     else
+  //     {
+  //         isJumping = true;
+  //     }
+  // }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -434,6 +437,7 @@ public class PlayerMove : MonoBehaviour
         
         if (collision.gameObject.layer == 12)
         {
+            Debug.Log("111111");
             if (isBoarding)
             {
                 Destroy(collision.gameObject);
@@ -448,8 +452,11 @@ public class PlayerMove : MonoBehaviour
             else
             {
                 anim.CrossFade("BackDeath", 0.1f);
-                dead = true;
+                mycoll.size = new Vector3(0.5f, 2.2f, 1);
+                mycoll.center = new Vector3(0, 1.1f, -2);
 
+                dead = true;
+                Debug.Log("adad");
             }
             
         }

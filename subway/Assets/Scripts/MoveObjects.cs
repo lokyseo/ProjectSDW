@@ -33,12 +33,12 @@ public class MoveObjects : MonoBehaviour
 			transform.Translate(0, 0, -moveSpeed * Time.deltaTime);
 		}
        
-        if(this.transform.position.z < -160)
-        {
-            if(this.transform.tag == "background")
-            {
-                Destroy(this.gameObject);
-            }
-        }
+       //if(this.transform.position.z < -160)
+       //{
+       //    if(this.transform.tag == "background")
+       //    {
+       //        Destroy(this.gameObject);
+       //    }
+       //}
 	}
 }

@@ -6,10 +6,8 @@ public class Generate : MonoBehaviour {
 
 	public Vector3 startingPt;
 	public Transform[] premades;
-	public Transform background;
 	public List<Transform> currentPremades;
 	int rand;
-    int co;
 
 
 	void Start()
@@ -19,18 +17,16 @@ public class Generate : MonoBehaviour {
         {
 			rand = Random.Range(0, premades.Length);
             currentPremades.Add((Transform)Instantiate
-                (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz+40), Quaternion.identity) as Transform);
-            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz+40), Quaternion.identity);
-            Instantiate(background, new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz-10), Quaternion.identity);
+                (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz-20), Quaternion.identity) as Transform);
+            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz - 20), Quaternion.identity);
 		}
-        co = 0;
 	}
 	
 	void Update ()
     {
-		if (currentPremades[co].position.z < -120)
+		if (currentPremades[0].position.z < -140)
         {
-			Destroy((currentPremades[co] as Transform).gameObject);
+			Destroy((currentPremades[0] as Transform).gameObject);
 			currentPremades.RemoveAt(0);
 			rand = Random.Range (0, premades.Length);
 			Debug.Log(premades.Length);

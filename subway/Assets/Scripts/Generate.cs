@@ -6,34 +6,47 @@ public class Generate : MonoBehaviour {
 
 	public Vector3 startingPt;
 	public Transform[] premades;
-	public List<Transform> currentPremades;
 	int rand;
+    //스피드 
+    public static float _mapSpeed;
+    private float speedTimer;
 
+    public static bool _createMap;
 
-	void Start()
+    void Start()
     {
-		currentPremades = new List<Transform>();
-		for (int iz = 0; iz < 10; iz++)
+        _mapSpeed = 10.0f;
+        speedTimer = 5.0f;
+		for (int iz = 0; iz < 5; iz++)
         {
 			rand = Random.Range(0, premades.Length);
-            currentPremades.Add((Transform)Instantiate
-                (premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz-20), Quaternion.identity) as Transform);
-            Instantiate(premades[rand], new Vector3(startingPt.x, startingPt.y, startingPt.z+140*iz - 20), Quaternion.identity);
+            Instantiate(premades[rand], new Vector3(0, 0, 0+140*iz - 20), Quaternion.identity);
 		}
 	}
 	
 	void Update ()
     {
-		if (currentPremades[0].position.z < -140)
+        speedTimer -= Time.deltaTime;
+        if(speedTimer < 0)
         {
-			Destroy((currentPremades[0] as Transform).gameObject);
-			currentPremades.RemoveAt(0);
-			rand = Random.Range (0, premades.Length);
-			Debug.Log(premades.Length);
-			Debug.Log(currentPremades.Capacity-1);
-			//currentPremades.Add((Transform)Instantiate
-            //    (premades [rand], new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity - 1].position.z+140), Quaternion.identity) as Transform);
-			//Instantiate(background, new Vector3(startingPt.x, startingPt.y, currentPremades[currentPremades.Capacity - 1].position.z+140), Quaternion.identity);
-		}
-	}
+            if(_mapSpeed < 25.0f)
+            {
+                _mapSpeed += 1.0f;
+                Debug.Log(_mapSpeed);
+            }
+            speedTimer = 5.0f;
+        }
+
+        if(_createMap)
+        {
+            rand = Random.Range(0, premades.Length);
+            Instantiate(premades[rand], new Vector3(0, 0, 498), Quaternion.identity);
+
+            _createMap = false;
+
+        }
+
+       
+      
+    }
 }

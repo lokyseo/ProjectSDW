@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviour
     public Animator anim;
     private BoxCollider mycoll;    
 
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 10.0f;
     private int ptXchar;
     private Vector3 target;
     private bool isLeft;
@@ -89,7 +89,7 @@ public class PlayerMove : MonoBehaviour
         if (PlayerMove.dead) return;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (isLeft == false && isRolling == false)
+            if (isLeft == false && isRolling == false && isRight == false)
             {
                 if (ptXchar == 0)
                 {
@@ -215,8 +215,8 @@ public class PlayerMove : MonoBehaviour
         {
             if (ptXchar == 0)
             {
-                this.transform.position =
-                    Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+                this.transform.position =Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+
                 if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar--;
@@ -227,6 +227,7 @@ public class PlayerMove : MonoBehaviour
             else if (ptXchar == 1)
             {
                 this.transform.position = Vector3.Lerp(this.transform.position, target, moveSpeed * Time.deltaTime);
+
                 if (Vector3.Distance(new Vector3(target.x, 0, 0), new Vector3(this.transform.position.x, 0, 0)) <= 0.2f)
                 {
                     ptXchar--;
@@ -423,12 +424,12 @@ public class PlayerMove : MonoBehaviour
                 if (ptXchar == 1)
                 {
                     this.transform.position =
-                       Vector3.Lerp(transform.position, new Vector3(0, 0, 0), moveSpeed * Time.deltaTime);
+                       Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), moveSpeed * Time.deltaTime);
                 }
                 else if (ptXchar == 0)
                 {
                     this.transform.position =
-                       Vector3.Lerp(transform.position, new Vector3(-3.5f, 0, 0), moveSpeed * Time.deltaTime);
+                       Vector3.MoveTowards(transform.position, new Vector3(-3.5f, 0, 0), moveSpeed * Time.deltaTime);
                 }
             }
 
@@ -437,7 +438,6 @@ public class PlayerMove : MonoBehaviour
         
         if (collision.gameObject.layer == 12)
         {
-            Debug.Log("111111");
             if (isBoarding)
             {
                 Destroy(collision.gameObject);
@@ -456,7 +456,6 @@ public class PlayerMove : MonoBehaviour
                 mycoll.center = new Vector3(0, 1.1f, -2);
 
                 dead = true;
-                Debug.Log("adad");
             }
             
         }
@@ -515,6 +514,29 @@ public class PlayerMove : MonoBehaviour
                 againSuper = true;
             }
             Instantiate(_ptc_getItem, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.layer == 17)//선물상자
+        {
+            Instantiate(_ptc_getItem, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            int rand = Random.Range(0, 3);
+
+            if(rand == 0)
+            {
+                UIScript._money += 500;
+                PlayerPrefs.SetInt(UIScript._txtMoney, UIScript._money);
+            }
+            else if(rand == 1)
+            {
+                UIScript._countBoard++;
+            }
+            else if(rand == 2)
+            {
+
+            }
+
+
             Destroy(other.gameObject);
         }
     }

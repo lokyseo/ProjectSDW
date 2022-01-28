@@ -1490,8 +1490,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingPt: {x: 0, y: 0, z: 0}
   premades:
-  - {fileID: 488004, guid: dd842ef3c757108439a542e78fa41283, type: 3}
-  currentPremades: []
+  - {fileID: 488004, guid: b2bbae63de13a024fbd3651acfcee35f, type: 3}
+  - {fileID: 488004, guid: f8a0f89f669cd0d4196b231611df7501, type: 3}
+  - {fileID: 488004, guid: 692600d7064dbf34c91f9ac86203dabd, type: 3}
 --- !u!4 &1010869835
 Transform:
   m_ObjectHideFlags: 0

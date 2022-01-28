@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - Obstacle
   - background
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Leftcollision
   - Star
   - superJump
-  - 
+  - gift
   - 
   - 
   - 

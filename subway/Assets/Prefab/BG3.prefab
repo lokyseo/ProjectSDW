@@ -4746,7 +4746,7 @@ GameObject:
   - component: {fileID: 4407939010931124108}
   - component: {fileID: 6481157729364019255}
   - component: {fileID: 2178324215160767613}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: train_passenger_LOD0_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5257,7 +5257,7 @@ GameObject:
   - component: {fileID: 3197548328533060966}
   - component: {fileID: 1628728443870331950}
   - component: {fileID: 5420924602562914536}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: train_sub_LOD0_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7086,7 +7086,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8521007277347467981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 2, z: 50.54}
+  m_LocalPosition: {x: 0.05, y: 2, z: 52.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 376441780872542539}

@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
         else if(spawnPercent == 4 || spawnPercent == 1)
         {
             randpt = Random.Range(0, _itempoint.Length);
-            item = Instantiate(_superJump, _itempoint[randpt].position, Quaternion.identity);
+            item = Instantiate(_gift, _itempoint[randpt].position, Quaternion.identity);
         }
     }
 

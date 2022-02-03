@@ -40,7 +40,7 @@ public class Generate : MonoBehaviour {
         if(_createMap)
         {
             rand = Random.Range(0, premades.Length);
-            Instantiate(premades[rand], new Vector3(0, 0, 498), Quaternion.identity);
+            Instantiate(premades[rand], new Vector3(0, 0, 497), Quaternion.identity);
 
             _createMap = false;
 

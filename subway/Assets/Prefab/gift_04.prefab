@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3513350046300884478}
   - component: {fileID: 1049361229198533496}
   - component: {fileID: 2999466810759871653}
-  m_Layer: 0
+  - component: {fileID: 9011678645063416465}
+  m_Layer: 17
   m_Name: gift_04_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520675748565472290}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0.76}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7049600727370965815}
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!135 &9011678645063416465
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520675748565472290}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5418452
+  m_Center: {x: 0.007864088, y: 0.5383198, z: -0.011468589}
 --- !u!1 &7682831100690332045
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7049600727370965815}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: gift_04
   m_TagString: Untagged
   m_Icon: {fileID: 0}

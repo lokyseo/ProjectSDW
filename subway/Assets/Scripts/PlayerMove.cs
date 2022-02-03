@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviour
     public Animator anim;
     private BoxCollider mycoll;    
 
-    private float moveSpeed = 10.0f;
+    private float moveSpeed = 8.0f;
     private int ptXchar;
     private Vector3 target;
     private bool isLeft;
@@ -52,12 +52,21 @@ public class PlayerMove : MonoBehaviour
     public static bool _isleftDead;
     public static bool againcollision;
 
+    //사운드
+    public GameObject sound_jump;
+    AudioSource s_jumpSound;
+
+
     private void Start()
     {
         dead = false;
         myRigid = this.transform.GetComponent<Rigidbody>();
         anim = this.GetComponentInChildren<Animator>();
         mycoll = this.GetComponent<BoxCollider>();
+        s_jumpSound = sound_jump.GetComponent<AudioSource>();
+        s_jumpSound.mute = false;
+        s_jumpSound.playOnAwake = false;
+        s_jumpSound.loop = false;
 
         isJumping = false;
         isLeft = false;
@@ -89,8 +98,11 @@ public class PlayerMove : MonoBehaviour
         if (PlayerMove.dead) return;
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (isLeft == false && isRolling == false && isRight == false)
+            if (isLeft == false && isRight == false)
             {
+                isRolling = false;
+                mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+                mycoll.center = new Vector3(0, 1.1f, 0);
                 if (ptXchar == 0)
                 {
                     target = new Vector3(-3.8f, this.transform.position.y, this.transform.position.z);
@@ -124,9 +136,11 @@ public class PlayerMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (isRight == false && isRolling == false && isLeft == false)
+            if (isRight == false && isLeft == false)
             {
-
+                isRolling = false;
+                mycoll.size = new Vector3(0.5f, 2.2f, 1.0f);
+                mycoll.center = new Vector3(0, 1.1f, 0);
                 if (ptXchar == 0)
                 {
                     target = new Vector3(3.8f, this.transform.position.y, this.transform.position.z);
@@ -170,6 +184,7 @@ public class PlayerMove : MonoBehaviour
                 if(isSuper)
                 {
                     myRigid.AddForce(Vector3.up * 21.0f, ForceMode.Impulse);
+                    s_jumpSound.Play();
                 }
                 else
                 {
@@ -353,17 +368,18 @@ public class PlayerMove : MonoBehaviour
     public ParticleSystem _ptc_getItem;
     public ParticleSystem _ptc_board;
     public ParticleSystem _ptc_coin;
+    public ParticleSystem _ptc_gift;
 
-  // void OnCollisionStay(Collision collision)
-  // {
-  //     if (collision.gameObject.layer == 10)//땅
-  //     {
-  //     }
-  //     else
-  //     {
-  //         isJumping = true;
-  //     }
-  // }
+    // void OnCollisionStay(Collision collision)
+    // {
+    //     if (collision.gameObject.layer == 10)//땅
+    //     {
+    //     }
+    //     else
+    //     {
+    //         isJumping = true;
+    //     }
+    // }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -519,7 +535,7 @@ public class PlayerMove : MonoBehaviour
 
         if (other.gameObject.layer == 17)//선물상자
         {
-            Instantiate(_ptc_getItem, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            Instantiate(_ptc_gift, this.transform.position + new Vector3(0, 1, 0), Quaternion.identity);
             int rand = Random.Range(0, 3);
 
             if(rand == 0)
@@ -533,6 +549,7 @@ public class PlayerMove : MonoBehaviour
             }
             else if(rand == 2)
             {
+                UIScript._countBoard++;
 
             }
 

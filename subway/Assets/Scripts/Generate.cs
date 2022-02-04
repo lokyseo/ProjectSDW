@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Generate : MonoBehaviour {
 
-	public Vector3 startingPt;
+
 	public Transform[] premades;
 	int rand;
     //스피드 
@@ -26,27 +26,25 @@ public class Generate : MonoBehaviour {
 	
 	void Update ()
     {
-        speedTimer -= Time.deltaTime;
-        if(speedTimer < 0)
-        {
-            if(_mapSpeed < 25.0f)
-            {
-                _mapSpeed += 1.0f;
-                Debug.Log(_mapSpeed);
-            }
-            speedTimer = 5.0f;
-        }
-
-        if(_createMap)
+        if (_createMap)
         {
             rand = Random.Range(0, premades.Length);
-            Instantiate(premades[rand], new Vector3(0, 0, 497), Quaternion.identity);
+            Instantiate(premades[rand], new Vector3(0, 0, 445), Quaternion.identity);
 
             _createMap = false;
 
         }
 
-       
+        speedTimer -= Time.deltaTime;
+        if(speedTimer < 0)
+        {
+            if(_mapSpeed < 25.0f)
+            {
+                _mapSpeed += 0.5f;
+                Debug.Log(_mapSpeed);
+            }
+            speedTimer = 3.0f;
+        }
       
     }
 }

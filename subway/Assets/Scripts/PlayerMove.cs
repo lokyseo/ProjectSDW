@@ -401,7 +401,7 @@ public class PlayerMove : MonoBehaviour
                 if(againcollision)
                 {
                     _isleftDead = true;
-                    Invoke("leftDie", 0.8f);
+                    Invoke("leftDie", 0.9f);
                     dead = true;
                     againcollision = false;
                 }
@@ -467,6 +467,8 @@ public class PlayerMove : MonoBehaviour
             }
             else
             {
+                Instantiate(_ptc_collision, this.transform.position + new Vector3(-0.1f, 1, 0), Quaternion.identity);
+
                 anim.CrossFade("BackDeath", 0.1f);
                 mycoll.size = new Vector3(0.5f, 2.2f, 1);
                 mycoll.center = new Vector3(0, 1.1f, -2);

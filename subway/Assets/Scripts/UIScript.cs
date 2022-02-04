@@ -53,6 +53,12 @@ public class UIScript : MonoBehaviour
     int superPrice;
     int starPrice;
 
+    //사운드
+    public AudioSource s_purchase;
+    public AudioSource s_shopBgm;
+    public AudioSource s_startBgm;
+    public AudioSource s_hitSound;
+
     void Start()
     {
 		_money = PlayerPrefs.GetInt(_txtMoney, 0);
@@ -75,6 +81,9 @@ public class UIScript : MonoBehaviour
 
         _canvasShop.SetActive(false);
         _money += 10000;
+
+        s_shopBgm.playOnAwake = false;
+        s_startBgm.playOnAwake = true;
     }
 
     void Update()
@@ -89,16 +98,24 @@ public class UIScript : MonoBehaviour
     {
         _canvasStart.SetActive(false);
         _canvasShop.SetActive(true);
+        s_startBgm.Stop();
+        s_shopBgm.Play();
+        s_hitSound.mute = true;
     }
 
     public void OnClick_CloseShop()
     {
         _canvasStart.SetActive(true);
         _canvasShop.SetActive(false);
+        s_startBgm.Play();
+        s_shopBgm.Stop();
+        s_hitSound.mute = false;
     }
 
     public void Purchase_Board()
     {
+        s_purchase.Play();
+
         _countBoard++;
         _money -= 1000;
 
@@ -107,6 +124,8 @@ public class UIScript : MonoBehaviour
 
     public void Upgrade_SuperJump()
     {
+        s_purchase.Play();
+
         int upgradeCount = 6;
         if (upgradeCount <= _upgradeSuperJump) return;
         _money -= 1000 + (500 * _upgradeSuperJump);
@@ -120,6 +139,8 @@ public class UIScript : MonoBehaviour
 
     public void Upgrade_Star()
     {
+        s_purchase.Play();
+
         int upgradeCount = 6;
         if (upgradeCount <= _upgradeStar) return;
         _money -= 1200 + 600 * _upgradeStar;
@@ -133,6 +154,8 @@ public class UIScript : MonoBehaviour
 
     public void Purchase_Mystery()
     {
+        s_purchase.Play();
+
         int rand = Random.Range(0, 5);
 
         _money -= 500;

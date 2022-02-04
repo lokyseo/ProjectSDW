@@ -21,12 +21,12 @@ public class MoveObjects : MonoBehaviour
 			transform.Translate(0, 0, -Generate._mapSpeed * Time.deltaTime);
 		}
        
-       if(this.transform.position.z < -200)
+       if(this.transform.position.z < -250)
        {
            if(this.transform.tag == "background")
            {
-                Destroy(this.gameObject);
                 Generate._createMap = true;
+                Destroy(this.gameObject);
            }
        }
 	}
